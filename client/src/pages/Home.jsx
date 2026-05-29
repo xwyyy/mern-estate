@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
-import SwiperCore from 'swiper';
+//import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 import ListingItem from '../components/ListingItem';
 
@@ -10,8 +10,7 @@ export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
-  SwiperCore.use([Navigation]);
-  console.log(offerListings);
+  //SwiperCore.use([Navigation]);
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
@@ -40,7 +39,7 @@ export default function Home() {
         const data = await res.json();
         setSaleListings(data);
       } catch (error) {
-        log(error);
+        console.log(error);
       }
     };
     fetchOfferListings();
@@ -55,7 +54,7 @@ export default function Home() {
           place with ease
         </h1>
         <div className='text-gray-400 text-xs sm:text-sm'>
-          Sahand Estate is the best place to find your next perfect place to
+          We are the best place to find your next perfect place to
           live.
           <br />
           We have a wide range of properties for you to choose from.
@@ -69,21 +68,18 @@ export default function Home() {
       </div>
 
       {/* swiper */}
-      <Swiper navigation>
-        {offerListings &&
-          offerListings.length > 0 &&
-          offerListings.map((listing) => (
-            <SwiperSlide>
-              <div
-                style={{
-                  background: `url(${listing.imageUrls[0]}) center no-repeat`,
-                  backgroundSize: 'cover',
-                }}
-                className='h-[500px]'
-                key={listing._id}
-              ></div>
-            </SwiperSlide>
-          ))}
+      <Swiper navigation modules={[Navigation]}>
+        {offerListings.map((listing) => (
+          <SwiperSlide key={listing._id}>
+            <div
+              style={{
+                background: `url(${listing.imageUrls[0]}) center no-repeat`,
+                backgroundSize: 'cover',
+              }}
+              className='h-[500px]'
+            ></div>
+          </SwiperSlide>
+        ))}
       </Swiper>
 
       {/* listing results for offer, sale and rent */}

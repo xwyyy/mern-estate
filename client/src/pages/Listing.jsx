@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import { useSelector } from 'react-redux';
@@ -26,7 +26,16 @@ export default function Listing() {
   const [copied, setCopied] = useState(false);
   const [contact, setContact] = useState(false);
   const params = useParams();
+  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
+
+  const handleContactClick = () => {
+    if (!currentUser) {
+      navigate('/sign-in', { state: { from: `/listing/${params.listingId}` } });
+      return;
+    }
+    setContact(true);
+  };
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -136,9 +145,9 @@ export default function Listing() {
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
-            {currentUser && listing.userRef !== currentUser._id && !contact && (
+            {listing.userRef !== currentUser?._id && !contact && (
               <button
-                onClick={() => setContact(true)}
+                onClick={handleContactClick}
                 className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
               >
                 Contact landlord

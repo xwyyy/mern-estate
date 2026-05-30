@@ -1,6 +1,7 @@
 import bcryptjs from 'bcryptjs';
 import User from '../models/user.model.js';
 import { errorHandler } from '../utils/error.js';
+import { authCookieOptions } from '../utils/authCookie.js';
 import Listing from '../models/listing.model.js';
 
 export const test = (req, res) => {
@@ -43,7 +44,7 @@ export const deleteUser = async (req, res, next) => {
     return next(errorHandler(401, 'You can only delete your own account!'));
   try {
     await User.findByIdAndDelete(req.params.id);
-    res.clearCookie('access_token');
+    res.clearCookie('access_token', authCookieOptions);
     res.status(200).json('User has been deleted!');
   } catch (error) {
     next(error);

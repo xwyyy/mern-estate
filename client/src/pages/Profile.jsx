@@ -80,6 +80,7 @@ export default function Profile() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(formData),
       });
       const data = await res.json();
@@ -100,6 +101,7 @@ export default function Profile() {
       dispatch(deleteUserStart());
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
+        credentials: 'include',
       });
       const data = await res.json();
       if (data.success === false) {
@@ -115,7 +117,9 @@ export default function Profile() {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch('/api/auth/signout');
+      const res = await fetch('/api/auth/signout', {
+        credentials: 'include',
+      });
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
@@ -130,7 +134,9 @@ export default function Profile() {
   const handleShowListings = async () => {
     try {
       setShowListingsError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const res = await fetch(`/api/user/listings/${currentUser._id}`, {
+        credentials: 'include',
+      });
       const data = await res.json();
       if (data.success === false) {
         setShowListingsError(true);
@@ -147,6 +153,7 @@ export default function Profile() {
     try {
       const res = await fetch(`/api/listing/delete/${listingId}`, {
         method: 'DELETE',
+        credentials: 'include',
       });
       const data = await res.json();
       if (data.success === false) {

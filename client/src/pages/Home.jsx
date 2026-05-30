@@ -68,19 +68,27 @@ export default function Home() {
       </div>
 
       {/* swiper */}
-      <Swiper navigation modules={[Navigation]}>
-        {offerListings.map((listing) => (
-          <SwiperSlide key={listing._id}>
-            <div
-              style={{
-                background: `url(${listing.imageUrls[0]}) center no-repeat`,
-                backgroundSize: 'cover',
-              }}
-              className='h-[500px]'
-            ></div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {offerListings.length > 0 && (
+        <div className='max-w-6xl mx-auto px-3 mb-10'>
+          <Swiper
+            navigation
+            modules={[Navigation]}
+            className='home-swiper rounded-lg shadow-md overflow-hidden'
+          >
+            {offerListings.map((listing) => (
+              <SwiperSlide key={listing._id}>
+                <div
+                  style={{
+                    background: `url(${listing.imageUrls[0]}) center no-repeat`,
+                    backgroundSize: 'cover',
+                  }}
+                  className='h-[400px] sm:h-[450px]'
+                ></div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      )}
 
       {/* listing results for offer, sale and rent */}
 

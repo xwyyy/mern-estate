@@ -5,3 +5,27 @@
 body{
     background-color: rgb(241, 245, 241);
 }
+
+.home-swiper {
+    --swiper-navigation-color: #334155;
+    --swiper-navigation-size: 22px;
+}
+
+.home-swiper .swiper-button-next,
+.home-swiper .swiper-button-prev {
+    background: rgba(255, 255, 255, 0.9);
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.home-swiper .swiper-button-next::after,
+.home-swiper .swiper-button-prev::after {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.home-swiper .swiper-button-disabled {
+    opacity: 0.35;
+}

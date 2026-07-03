@@ -1,0 +1,32 @@
+name: mern-app
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+    env_file: ./.env
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./client/.env
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    ports:
+      - 5173:5173
+    command: npm run dev -- --host
+    depends_on:
+      - api
+
+
+
